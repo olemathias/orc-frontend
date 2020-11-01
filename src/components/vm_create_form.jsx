@@ -64,7 +64,7 @@ class VmCreateForm extends React.Component {
     if (this.state.environment === null) {
       return;
     }
-    const networks = this.props.network.filter((network) => { return network.environment_id == this.state.environment }).map((network) => <option key={network.id} value={network.id}>{network.name}</option> );
+    const networks = this.props.network.filter((network) => { return network.environment.id == this.state.environment }).map((network) => <option key={network.id} value={network.id}>{network.name}</option> );
     return (<Form.Group controlId="createVm.Network">
       <Form.Label>Network</Form.Label>
       <Form.Control as="select" name="network" onChange={(e) => this.handleChange(e)}>
