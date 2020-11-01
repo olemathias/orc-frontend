@@ -9,6 +9,7 @@ import Logout from "./pages/logout";
 
 import Vm from "./pages/vm";
 import VmCreate from "./pages/vm_create";
+import VmShow from "./pages/vm_show";
 
 import Error404 from "./pages/404";
 
@@ -28,7 +29,7 @@ const AppRouter = () => (
       <Route exact path='/logout' component={Logout} />
       <Route exact path='/vm/' component={Vm} />
       <Route exact path='/vm/create' component={VmCreate} />
-      <Route exact path='/vm/:id(\\d+)' component={Vm} />
+      <Route exact path='/vm/:id(\d+)' component={VmShow} />
     </RequireAuth>
     <Route component={Error404} />
   </Switch>
