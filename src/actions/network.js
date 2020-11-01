@@ -12,10 +12,22 @@ const network_path = 'network/';
 export const getNetwork = () => {
   const user = store.getState().user
   return (dispatch) => {
-    dispatch({ type: GET_NETWORK });
-    return axios.get(base_url+network_path, {headers: {'Authorization': 'JWT '+user.token}}).then(
-      resp => dispatch({ type: GET_NETWORK_SUCCESS, payload: resp.data }),
-      err => dispatch({ type: GET_NETWORK_FAILURE, payload: err })
+    dispatch({
+      type: GET_NETWORK
+    });
+    return axios.get(base_url + network_path, {
+      headers: {
+        'Authorization': 'JWT ' + user.token
+      }
+    }).then(
+      resp => dispatch({
+        type: GET_NETWORK_SUCCESS,
+        payload: resp.data
+      }),
+      err => dispatch({
+        type: GET_NETWORK_FAILURE,
+        payload: err
+      })
     );
   };
 };

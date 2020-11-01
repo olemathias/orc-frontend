@@ -5,7 +5,7 @@ const LOGIN_USER = 'LOGIN_USER';
 const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
 
-const LOGOUT_USER = 'LOGOUT_USER';
+//const LOGOUT_USER = 'LOGOUT_USER';
 const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS';
 
 const cookies = new Cookies();
@@ -17,20 +17,22 @@ const defaultUser = {
 };
 
 const defaultUserState = () => {
-  let token = cookies.get('orc.authtoken');
+  let token = cookies.get('orc.accesstoken');
   if (token == null) {
     return defaultUser;
   };
   let decoded = jwt_decode(token);
   if (Date.now() >= decoded.exp * 1000 || decoded.username == null) {
-    cookies.remove('orc.authtoken');
+    cookies.remove('orc.accesstoken');
     return defaultUser;
   }
   return {
     token: token,
     logged_in: true,
     isFetching: false,
-    username: decoded.username
+    username: decoded.username,
+    first_name: decoded.first_name,
+    last_name: decoded.last_name
   };
 }
 
@@ -46,11 +48,12 @@ const userReducer = (state = defaultUserState(), action) => {
       return user;
 
     case LOGIN_USER_SUCCESS:
+      let decoded = jwt_decode(action.payload.access);
       user = {
-        token: action.payload.token,
-        username: action.payload.user.username,
-        first_name: action.payload.user.first_name,
-        last_name: action.payload.user.last_name,
+        token: action.payload.access,
+        username: decoded.username,
+        first_name: decoded.first_name,
+        last_name: decoded.last_name,
         logged_in: true,
         error: null,
         isFetching: false

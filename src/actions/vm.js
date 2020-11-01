@@ -12,10 +12,22 @@ const vm_path = 'vm/';
 export const getVM = () => {
   const user = store.getState().user
   return (dispatch) => {
-    dispatch({ type: GET_VM });
-    return axios.get(base_url+vm_path, {headers: {'Authorization': 'JWT '+user.token}}).then(
-      resp => dispatch({ type: GET_VM_SUCCESS, payload: resp.data }),
-      err => dispatch({ type: GET_VM_FAILURE, payload: err })
+    dispatch({
+      type: GET_VM
+    });
+    return axios.get(base_url + vm_path, {
+      headers: {
+        'Authorization': 'JWT ' + user.token
+      }
+    }).then(
+      resp => dispatch({
+        type: GET_VM_SUCCESS,
+        payload: resp.data
+      }),
+      err => dispatch({
+        type: GET_VM_FAILURE,
+        payload: err
+      })
     );
   };
 };

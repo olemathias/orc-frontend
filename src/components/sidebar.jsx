@@ -1,12 +1,12 @@
 import React from "react";
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 class SideBar extends React.Component {
   render() {
     let userNavBar;
-    if ( this.props.user.logged_in ) {
+    if (this.props.user.logged_in) {
       userNavBar = (
-        <div>
+      <div>
         <li className="nav-item">
           <Link className="nav-link" to="/environment">Environments</Link>
         </li>
@@ -19,21 +19,21 @@ class SideBar extends React.Component {
         <li className="nav-item">
           <Link className="nav-link" to="/django-rq">Django RQ</Link>
         </li>
-        </div>
+      </div>
       )
     }
 
     return (
-      <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-        <div className="sidebar-sticky pt-3">
-          <ul className="nav flex-column">
-            <li className="nav-item">
-              <Link className="nav-link" to="/">Home</Link>
-            </li>
-            {userNavBar}
-          </ul>
-        </div>
-      </nav>
+    <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div className="sidebar-sticky pt-3">
+        <ul className="nav flex-column">
+          <li className="nav-item">
+            <Link className="nav-link" to="/">Home</Link>
+          </li>
+          {userNavBar}
+        </ul>
+      </div>
+    </nav>
     );
   }
 }
