@@ -1,33 +1,29 @@
-import store from '../store';
+import store from '../store'
 
-const axios = require('axios');
+import * as Actions from '../constants/actions'
+import * as Config from '../constants/config'
 
-const GET_VM = 'GET_VM';
-const GET_VM_SUCCESS = 'GET_VM_SUCCESS';
-const GET_VM_FAILURE = 'GET_VM_FAILURE';
-
-const base_url = 'http://localhost:8000/';
-const vm_path = 'vm/';
+const axios = require('axios')
 
 export const getVM = () => {
   const user = store.getState().user
   return (dispatch) => {
     dispatch({
-      type: GET_VM
-    });
-    return axios.get(base_url + vm_path, {
+      type: Actions.GET_VM
+    })
+    return axios.get(Config.API_URL + Config.VM_PATH, {
       headers: {
-        'Authorization': 'JWT ' + user.token
+        Authorization: 'JWT ' + user.token
       }
     }).then(
       resp => dispatch({
-        type: GET_VM_SUCCESS,
+        type: Actions.GET_VM_SUCCESS,
         payload: resp.data
       }),
       err => dispatch({
-        type: GET_VM_FAILURE,
+        type: Actions.GET_VM_FAILURE,
         payload: err
       })
-    );
-  };
-};
+    )
+  }
+}

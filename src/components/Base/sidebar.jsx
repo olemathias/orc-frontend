@@ -1,9 +1,9 @@
-import React from "react";
-import {Link} from 'react-router-dom'
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 class SideBar extends React.Component {
-  render() {
-    let userNavBar;
+  render () {
+    let userNavBar
     if (this.props.user.logged_in) {
       userNavBar = (
       <div>
@@ -18,6 +18,9 @@ class SideBar extends React.Component {
         </li>
         <li className="nav-item">
           <Link className="nav-link" to="/django-rq">Django RQ</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/">Rest API</Link>
         </li>
       </div>
       )
@@ -34,8 +37,8 @@ class SideBar extends React.Component {
         </ul>
       </div>
     </nav>
-    );
+    )
   }
 }
 
-export default SideBar;
+export default SideBar

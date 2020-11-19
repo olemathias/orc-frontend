@@ -1,33 +1,29 @@
-import store from '../store';
+import store from '../store'
 
-const axios = require('axios');
+import * as Actions from '../constants/actions'
+import * as Config from '../constants/config'
 
-const GET_ENVIRONMENT = 'GET_ENVIRONMENT';
-const GET_ENVIRONMENT_SUCCESS = 'GET_ENVIRONMENT_SUCCESS';
-const GET_ENVIRONMENT_FAILURE = 'GET_ENVIRONMENT_FAILURE';
-
-const base_url = 'http://localhost:8000/';
-const environment_path = 'environment/';
+const axios = require('axios')
 
 export const getEnvironment = () => {
   const user = store.getState().user
   return (dispatch) => {
     dispatch({
-      type: GET_ENVIRONMENT
-    });
-    return axios.get(base_url + environment_path, {
+      type: Actions.GET_ENVIRONMENT
+    })
+    return axios.get(Config.API_URL + Config.ENVIROMENT_PATH, {
       headers: {
-        'Authorization': 'JWT ' + user.token
+        Authorization: 'JWT ' + user.token
       }
     }).then(
       resp => dispatch({
-        type: GET_ENVIRONMENT_SUCCESS,
+        type: Actions.GET_ENVIRONMENT_SUCCESS,
         payload: resp.data
       }),
       err => dispatch({
-        type: GET_ENVIRONMENT_FAILURE,
+        type: Actions.GET_ENVIRONMENT_FAILURE,
         payload: err
       })
-    );
-  };
-};
+    )
+  }
+}
