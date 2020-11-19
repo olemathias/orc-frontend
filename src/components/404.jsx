@@ -1,4 +1,6 @@
-function Error404() {
+import React from 'react'
+
+function Error404 () {
   return (<div>
     <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
       <h1 className="h2">
@@ -9,7 +11,7 @@ function Error404() {
       <i className="fas fa-user-astronaut fa-2x"></i>
       This page is not found
     </p>
-  </div>);
+  </div>)
 }
 
-export default Error404;
+export default Error404

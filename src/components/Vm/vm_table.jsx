@@ -1,18 +1,18 @@
-import React from "react";
+import React from 'react'
 
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Table from 'react-bootstrap/Table'
 
 class VmTable extends React.Component {
-  render(props) {
+  render (props) {
     const items = this.props.vm.map((vm) => <tr key={vm.id}>
       <td>
-        <Link to={"/vm/" + vm.id}>
+        <Link to={'/vm/' + vm.id}>
           {vm.id}
         </Link>
       </td>
       <td>{vm.name}</td>
-    </tr>);
+    </tr>)
     return (<Table striped="striped" bordered="bordered" hover="hover" responsive="responsive">
       <thead>
         <tr>
@@ -23,8 +23,8 @@ class VmTable extends React.Component {
       <tbody>
         {items}
       </tbody>
-    </Table>);
+    </Table>)
   }
 }
 
-export default VmTable;
+export default VmTable

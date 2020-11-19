@@ -1,16 +1,12 @@
-//const GET_ENVIRONMENT = 'GET_ENVIRONMENT';
-const GET_ENVIRONMENT_SUCCESS = 'GET_ENVIRONMENT_SUCCESS';
-//const GET_ENVIRONMENT_FAILURE = 'GET_ENVIRONMENT_FAILURE';
+import * as Actions from '../constants/actions'
 
-const environmentReducer = (state = [], action) =>
-{
-  switch (action.type)
-  {
-    case GET_ENVIRONMENT_SUCCESS:
-      return action.payload;
+const environmentReducer = (state = [], action) => {
+  switch (action.type) {
+    case Actions.GET_ENVIRONMENT_SUCCESS:
+      return action.payload
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default environmentReducer;
+export default environmentReducer

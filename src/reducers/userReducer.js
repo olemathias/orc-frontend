@@ -1,31 +1,30 @@
-import Cookies from 'universal-cookie';
-import jwt_decode from "jwt-decode";
+/* eslint-disable camelcase */
 
-const LOGIN_USER = 'LOGIN_USER';
-const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
-const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
+import Cookies from 'universal-cookie'
+import jwt_decode from 'jwt-decode'
 
-//const LOGOUT_USER = 'LOGOUT_USER';
-const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS';
+import * as Actions from '../constants/actions'
 
-const cookies = new Cookies();
+const cookies = new Cookies()
 
 const defaultUser = {
   token: null,
   logged_in: false,
   isFetching: false
-};
+}
 
 const defaultUserState = () => {
-  let token = cookies.get('orc.accesstoken');
+  const token = cookies.get('orc.accesstoken')
   if (token == null) {
-    return defaultUser;
-  };
-  let decoded = jwt_decode(token);
-  if (Date.now() >= decoded.exp * 1000 || decoded.username == null) {
-    cookies.remove('orc.accesstoken');
-    return defaultUser;
+    return defaultUser
   }
+
+  const decoded = jwt_decode(token)
+  if (Date.now() >= decoded.exp * 1000 || decoded.username == null) {
+    cookies.remove('orc.accesstoken')
+    return defaultUser
+  }
+
   return {
     token: token,
     logged_in: true,
@@ -33,22 +32,22 @@ const defaultUserState = () => {
     username: decoded.username,
     first_name: decoded.first_name,
     last_name: decoded.last_name
-  };
+  }
 }
 
 const userReducer = (state = defaultUserState(), action) => {
-  let user = {};
+  let user = {}
   switch (action.type) {
-    case LOGIN_USER:
+    case Actions.LOGIN_USER:
       user = {
         token: null,
         logged_in: false,
         isFetching: true
-      };
-      return user;
+      }
+      return user
 
-    case LOGIN_USER_SUCCESS:
-      let decoded = jwt_decode(action.payload.access);
+    case Actions.LOGIN_USER_SUCCESS: {
+      const decoded = jwt_decode(action.payload.access)
       user = {
         token: action.payload.access,
         username: decoded.username,
@@ -57,24 +56,28 @@ const userReducer = (state = defaultUserState(), action) => {
         logged_in: true,
         error: null,
         isFetching: false
-      };
-      return user;
+      }
+      return user
+    }
 
-    case LOGIN_USER_FAILURE:
+    case Actions.LOGIN_USER_FAILURE: {
       user = {
         token: null,
         logged_in: false,
         error: action.payload,
         isFetching: false
-      };
-      return user;
+      }
+      return user
+    }
 
-    case LOGOUT_USER_SUCCESS:
-      return defaultUser;
+    case Actions.LOGOUT_USER_SUCCESS: {
+      return defaultUser
+    }
 
-    default:
-      return state;
+    default: {
+      return state
+    }
   };
-};
+}
 
-export default userReducer;
+export default userReducer

@@ -1,25 +1,25 @@
 /* router.js */
-import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import React from 'react'
+import { Route, Switch, Redirect } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
-import Home from "./pages/home";
-import Login from "./pages/login";
-import Logout from "./pages/logout";
+import Home from './components/home'
+import Login from './components/User/login'
+import Logout from './components/User/logout'
 
-import Vm from "./pages/vm";
-import VmCreate from "./pages/vm_create";
-import VmShow from "./pages/vm_show";
+import Vm from './components/Vm/vm'
+import VmCreate from './components/Vm/vm_create'
+import VmShow from './components/Vm/vm_show'
 
-import Error404 from "./pages/404";
+import Error404 from './components/404'
 
 const RequireAuth = ({ children }) => {
-  const user = useSelector(state => state.user);
+  const user = useSelector(state => state.user)
   if (!user.logged_in) {
-    return <Redirect to='/login' />;
+    return <Redirect to='/login' />
   }
-  return children;
-};
+  return children
+}
 
 const AppRouter = () => (
   <Switch>
@@ -33,6 +33,6 @@ const AppRouter = () => (
     </RequireAuth>
     <Route component={Error404} />
   </Switch>
-);
+)
 
-export default AppRouter;
+export default AppRouter

@@ -1,16 +1,12 @@
-//const GET_NETWORK = 'GET_NETWORK';
-const GET_NETWORK_SUCCESS = 'GET_NETWORK_SUCCESS';
-//const GET_NETWORK_FAILURE = 'GET_NETWORK_FAILURE';
+import * as Actions from '../constants/actions'
 
-const networkReducer = (state = [], action) =>
-{
-  switch (action.type)
-  {
-    case GET_NETWORK_SUCCESS:
-      return action.payload;
+const networkReducer = (state = [], action) => {
+  switch (action.type) {
+    case Actions.GET_NETWORK_SUCCESS:
+      return action.payload
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default networkReducer;
+export default networkReducer
