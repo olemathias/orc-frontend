@@ -11,6 +11,8 @@ import Vm from './components/Vm/vm'
 import VmCreate from './components/Vm/vm_create'
 import VmShow from './components/Vm/vm_show'
 
+import Environment from './components/Environment/environment'
+
 import Error404 from './components/404'
 
 const RequireAuth = ({ children }) => {
@@ -30,6 +32,7 @@ const AppRouter = () => (
       <Route exact path='/vm/' component={Vm} />
       <Route exact path='/vm/create' component={VmCreate} />
       <Route exact path='/vm/:id(\d+)' component={VmShow} />
+      <Route exact path='/environment/' component={Environment} />
     </RequireAuth>
     <Route component={Error404} />
   </Switch>
