@@ -7,6 +7,9 @@ WORKDIR /app
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
 
+# Install dependencies # TODO Make this multi-stage
+RUN apk --no-cache --virtual build-dependencies add python make g++
+
 # install app dependencies
 COPY package.json ./
 COPY package-lock.json ./
