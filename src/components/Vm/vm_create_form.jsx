@@ -1,10 +1,11 @@
 import React from 'react'
+import { push } from 'connected-react-router'
 
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import InputGroup from 'react-bootstrap/InputGroup'
 
-import store from '../../store'
+import configureStore from '../../store'
 
 import * as Config from '../../constants/config'
 
@@ -12,17 +13,18 @@ class VmCreateForm extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      environment: null,
-      network: null,
+      environment: undefined,
+      network: undefined,
       os_template: 'debian10',
       memory: 4,
       cpu_cores: 2,
       os_disk: 32,
-      name: null
+      name: undefined
     }
   }
 
   handleSubmit = (e) => {
+    const store = configureStore()
     const axios = require('axios')
 
     const user = store.getState().user
@@ -31,7 +33,8 @@ class VmCreateForm extends React.Component {
         Authorization: 'JWT ' + user.token
       }
     }).then(function (response) {
-      console.log(response)
+      console.log(response.data.id)
+      store.dispatch(push('/vm/' + response.data.id))
     }).catch(function (error) {
       console.log(error)
     })
@@ -41,7 +44,7 @@ class VmCreateForm extends React.Component {
   handleChange = (e) => {
     let value = e.target.value
     if (value === '') {
-      value = null
+      value = undefined
     }
     if (!isNaN(value)) {
       value = parseInt(value)
@@ -52,7 +55,7 @@ class VmCreateForm extends React.Component {
   }
 
   nameForm = () => {
-    if (this.state.environment === null) {
+    if (this.state.environment === undefined) {
       return
     }
     const environment = this.props.environment.filter((environment) => { return environment.id === this.state.environment })[0]
@@ -60,7 +63,7 @@ class VmCreateForm extends React.Component {
     <Form.Group controlId="createVm.Name">
       <Form.Label>Name</Form.Label>
       <InputGroup className="mb-2 mr-sm-2">
-        <Form.Control name="name" placeholder="Hostname" value={this.state.name} onChange={(e) => this.handleChange(e)}/>
+        <Form.Control name="name" placeholder="Hostname" value={this.state.name || ''} onChange={(e) => this.handleChange(e)}/>
         <InputGroup.Append>
           <InputGroup.Text>.{environment.config.domain}</InputGroup.Text>
         </InputGroup.Append>
@@ -69,7 +72,7 @@ class VmCreateForm extends React.Component {
   }
 
   networkForm = () => {
-    if (this.state.environment === null) {
+    if (this.state.environment === undefined) {
       return
     }
     const networks = this.props.network.filter((network) => { return network.environment.id === this.state.environment }).map((network) => <option key={network.id} value={network.id}>{network.name}</option>)
@@ -83,27 +86,27 @@ class VmCreateForm extends React.Component {
   }
 
   hardwareForm = () => {
-    if (this.state.environment == null) {
+    if (this.state.environment === undefined) {
       return
     }
     return (<Form.Group controlId="createVm.Hardware">
       <Form.Label>Memory <small>GB</small></Form.Label>
       <InputGroup className="mb-2 mr-sm-2">
-        <Form.Control name="memory" value={this.state.memory} onChange={(e) => this.handleChange(e)}/>
+        <Form.Control name="memory" value={this.state.memory || ''} onChange={(e) => this.handleChange(e)}/>
       </InputGroup>
       <Form.Label>CPU Cores</Form.Label>
       <InputGroup className="mb-2 mr-sm-2">
-        <Form.Control name="cpu_cores" value={this.state.cpu_cores} onChange={(e) => this.handleChange(e)}/>
+        <Form.Control name="cpu_cores" value={this.state.cpu_cores || ''} onChange={(e) => this.handleChange(e)}/>
       </InputGroup>
       <Form.Label>OS Disk <small>GB</small></Form.Label>
       <InputGroup className="mb-2 mr-sm-2">
-        <Form.Control name="os_disk" value={this.state.os_disk} onChange={(e) => this.handleChange(e)}/>
+        <Form.Control name="os_disk" value={this.state.os_disk || ''} onChange={(e) => this.handleChange(e)}/>
       </InputGroup>
     </Form.Group>)
   }
 
   networkInfo = () => {
-    if (this.state.network == null) {
+    if (this.state.network === undefined) {
       return
     }
     const network = this.props.network.filter((network) => { return network.id === this.state.network })[0]
@@ -121,7 +124,7 @@ class VmCreateForm extends React.Component {
   }
 
   submitButton = () => {
-    if (this.state.environment === null || this.state.network === null || this.state.name === null) {
+    if (this.state.environment === undefined || this.state.network === undefined || this.state.name === undefined) {
       return (
         <Button variant="primary" type="submit" disabled>
               Create VM

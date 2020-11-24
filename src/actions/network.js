@@ -1,4 +1,4 @@
-import store from '../store'
+import configureStore from '../store'
 
 import * as Actions from '../constants/actions'
 import * as Config from '../constants/config'
@@ -6,6 +6,7 @@ import * as Config from '../constants/config'
 const axios = require('axios')
 
 export const getNetwork = () => {
+  const store = configureStore()
   const user = store.getState().user
   return (dispatch) => {
     dispatch({
