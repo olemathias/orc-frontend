@@ -1,4 +1,4 @@
-export const API_URL = 'http://localhost:8000/'
+export const API_URL = '/api/'
 
 export const AUTH_PATH = 'api-token-auth/'
 export const AUTH_REFRESH_PATH = 'api-token-refresh/'
