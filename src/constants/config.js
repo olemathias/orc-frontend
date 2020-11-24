@@ -1,5 +1,4 @@
-// export const API_URL = 'http://localhost:8000/'
-export const API_URL = '/api/'
+export const API_URL = process.env.REACT_APP_API_URL
 
 export const AUTH_PATH = 'api-token-auth/'
 export const AUTH_REFRESH_PATH = 'api-token-refresh/'
@@ -11,5 +10,5 @@ export const NETWORK_PATH = 'network/'
 
 export const VM_PATH = 'vm/'
 
-export const ADMIN_URL = 'http://localhost:8000/admin'
-export const DJANGORQ_URL = 'http://localhost:8000/django-rq'
+export const ADMIN_URL = process.env.REACT_APP_ADMIN_URL
+export const DJANGORQ_URL = process.env.REACT_APP_DJANGORQ_URL
