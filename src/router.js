@@ -15,13 +15,16 @@ import Environment from './components/Environment/environment'
 
 import Error404 from './components/404'
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  const user = useSelector(state => state.user)
-  if (!user.logged_in) {
-    return <Redirect to='/login' />
-  }
-  return <Component {...rest} />
-}
+const PrivateRoute: React.FC<{
+        component: React.FC;
+        path: string;
+        exact: boolean;
+    }> = (props) => {
+      const user = useSelector(state => state.user)
+      return (user.logged_in)
+        ? (<Route path={props.path} exact={props.exact} component={props.component} />)
+        : (<Redirect to="/login" />)
+    }
 
 const AppRouter = () => (
   <Switch>
