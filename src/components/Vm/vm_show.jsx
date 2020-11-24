@@ -39,6 +39,19 @@ function VmShow () {
     return (<div></div>)
   }
 
+  const state = Object.keys(SELECTED_VM.state).map(key =>
+    <div key={key}>
+      <a className="list-group-item list-group-item-action" data-toggle="collapse" href={'#' + key } role="button" aria-expanded="false" aria-controls={ key }>
+          <h5 className="mb-1">{ key + ' ' }
+            <span className="badge badge-secondary"> { SELECTED_VM.state[key].status } </span>
+          </h5>
+        </a>
+        <div id={ key } className="collapse" aria-labelledby={ key } data-parent="#state">
+          <div className="card-body"> { JSON.stringify(SELECTED_VM.state[key], null, 2) } </div>
+        </div>
+    </div>
+  )
+
   return (<div>
     <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
       <h1 className="h2">{SELECTED_VM.name}</h1>
@@ -78,6 +91,10 @@ function VmShow () {
     </tr>
   </tbody>
 </table>
+<h4>State</h4>
+<div className="list-group list-group-flush" id="state">
+{ state }
+</div>
   </div>)
 }
 
