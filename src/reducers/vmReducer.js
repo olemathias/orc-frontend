@@ -1,10 +1,8 @@
-// const GET_VM = 'GET_VM';
-const GET_VM_SUCCESS = 'GET_VM_SUCCESS'
-// const GET_VM_FAILURE = 'GET_VM_FAILURE';
+import * as Actions from '../constants/actions'
 
 const vmReducer = (state = [], action) => {
   switch (action.type) {
-    case GET_VM_SUCCESS:
+    case Actions.GET_VM_SUCCESS:
       return action.payload
     default:
       return state
