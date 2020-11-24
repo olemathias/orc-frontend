@@ -1,10 +1,8 @@
-import Cookies from 'universal-cookie'
-
 import * as Actions from '../constants/actions'
 import * as Config from '../constants/config'
 
 const axios = require('axios')
-const cookies = new Cookies()
+const sessionStorage = window.sessionStorage
 
 export const loginUser = (username, password) => {
   return (dispatch) => {
@@ -14,7 +12,7 @@ export const loginUser = (username, password) => {
       password
     }).then(
       auth => {
-        cookies.set('orc.accesstoken', auth.data.access, { path: '/' })
+        sessionStorage.setItem('orc.accesstoken', auth.data.access)
         dispatch({ type: Actions.LOGIN_USER_SUCCESS, payload: auth.data })
       },
       err => dispatch({ type: Actions.LOGIN_USER_FAILURE, payload: err })
@@ -25,7 +23,7 @@ export const loginUser = (username, password) => {
 export const logoutUser = () => {
   return (dispatch) => {
     dispatch({ type: Actions.LOGOUT_USER })
-    cookies.remove('orc.accesstoken')
+    sessionStorage.removeItem('orc.accesstoken')
     dispatch({ type: Actions.LOGOUT_USER_SUCCESS })
   }
 }

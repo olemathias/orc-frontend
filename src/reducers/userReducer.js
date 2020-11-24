@@ -1,11 +1,10 @@
 /* eslint-disable camelcase */
 
-import Cookies from 'universal-cookie'
 import jwt_decode from 'jwt-decode'
 
 import * as Actions from '../constants/actions'
 
-const cookies = new Cookies()
+const sessionStorage = window.sessionStorage
 
 const defaultUser = {
   token: null,
@@ -14,14 +13,14 @@ const defaultUser = {
 }
 
 const defaultUserState = () => {
-  const token = cookies.get('orc.accesstoken')
+  const token = sessionStorage.getItem('orc.accesstoken')
   if (token == null) {
     return defaultUser
   }
 
   const decoded = jwt_decode(token)
   if (Date.now() >= decoded.exp * 1000 || decoded.username == null) {
-    cookies.remove('orc.accesstoken')
+    sessionStorage.removeItem('orc.accesstoken')
     return defaultUser
   }
 
