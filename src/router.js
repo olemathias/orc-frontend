@@ -15,25 +15,23 @@ import Environment from './components/Environment/environment'
 
 import Error404 from './components/404'
 
-const RequireAuth = ({ children }) => {
+const PrivateRoute = ({ component: Component, ...rest }) => {
   const user = useSelector(state => state.user)
   if (!user.logged_in) {
     return <Redirect to='/login' />
   }
-  return children
+  return <Component {...rest} />
 }
 
 const AppRouter = () => (
   <Switch>
     <Route exact path='/login' component={Login} />
-    <RequireAuth>
-      <Route exact path='/' component={Home} />
-      <Route exact path='/logout' component={Logout} />
-      <Route exact path='/vm/' component={Vm} />
-      <Route exact path='/vm/create' component={VmCreate} />
-      <Route exact path='/vm/:id(\d+)' component={VmShow} />
-      <Route exact path='/environment/' component={Environment} />
-    </RequireAuth>
+    <PrivateRoute exact path='/' component={Home} />
+    <PrivateRoute exact path='/logout' component={Logout} />
+    <PrivateRoute exact path='/vm/' component={Vm} />
+    <PrivateRoute exact path='/vm/create' component={VmCreate} />
+    <PrivateRoute exact path='/vm/:id(\d+)' component={VmShow} />
+    <PrivateRoute exact path='/environment/' component={Environment} />
     <Route component={Error404} />
   </Switch>
 )

@@ -1,11 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-class SideBar extends React.Component {
-  render () {
-    let userNavBar
-    if (this.props.user.logged_in) {
-      userNavBar = (
+import { useSelector } from 'react-redux'
+import * as Config from '../../constants/config'
+
+function SideBar () {
+  const user = useSelector(state => state.user)
+  let userNavBar
+
+  if (user.logged_in) {
+    userNavBar = (
       <div>
         <li className="nav-item">
           <Link className="nav-link" to="/environment">Environments</Link>
@@ -14,19 +18,19 @@ class SideBar extends React.Component {
           <Link className="nav-link" to="/vm">VM</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/admin">Admin</Link>
+          <a className="nav-link" href={Config.ADMIN_URL}>Admin</a>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/django-rq">Django RQ</Link>
+          <a className="nav-link" href={Config.DJANGORQ_URL}>Django RQ</a>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/">Rest API</Link>
+          <a className="nav-link" href={Config.API_URL}>Rest API</a>
         </li>
       </div>
-      )
-    }
+    )
+  }
 
-    return (
+  return (
     <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
       <div className="sidebar-sticky pt-3">
         <ul className="nav flex-column">
@@ -37,8 +41,7 @@ class SideBar extends React.Component {
         </ul>
       </div>
     </nav>
-    )
-  }
+  )
 }
 
 export default SideBar

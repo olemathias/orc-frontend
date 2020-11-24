@@ -1,20 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-class TopBar extends React.Component {
-  render () {
-    let userBar
+import { useSelector } from 'react-redux'
 
-    if (this.props.user.logged_in) {
-      userBar = (<ul className="navbar-nav px-3">
+function TopBar () {
+  const user = useSelector(state => state.user)
+  let userBar
+
+  if (user.logged_in) {
+    userBar = (<ul className="navbar-nav px-3">
         <li className="nav-item text-nowrap">
           <Link className="nav-link" to="/logout">Sign out</Link>
         </li>
       </ul>
-      )
-    };
+    )
+  }
 
-    return (
+  return (
     <nav className="navbar navbar-dark sticky-top bg-primary flex-md-nowrap p-0 shadow">
       <Link className="navbar-brand col-md-3 col-lg-2 mr-0 px-3" to="/">Orc <small>ALPHA</small>
       </Link>
@@ -23,7 +25,6 @@ class TopBar extends React.Component {
       </button>
       {userBar}
     </nav>)
-  };
-};
+}
 
 export default TopBar
