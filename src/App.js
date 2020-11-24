@@ -1,5 +1,4 @@
 import React from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -20,7 +19,7 @@ library.add(fas, far)
 class App extends React.Component {
   render () {
     return (
-      <Router>
+      <div>
         <TopBar/>
         <div className="container-fluid">
           <div className="row">
@@ -30,7 +29,7 @@ class App extends React.Component {
             </main>
           </div>
         </div>
-      </Router>
+      </div>
     )
   };
 }
