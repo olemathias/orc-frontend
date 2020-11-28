@@ -9,6 +9,7 @@ export const ENVIROMENT_PATH = 'environment/'
 export const NETWORK_PATH = 'network/'
 
 export const VM_PATH = 'vm/'
+export const VM_TEMPLATE_PATH = 'vm_template/'
 
 export const ADMIN_URL = process.env.REACT_APP_ADMIN_URL
 export const DJANGORQ_URL = process.env.REACT_APP_DJANGORQ_URL
