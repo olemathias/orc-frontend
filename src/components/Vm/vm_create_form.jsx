@@ -15,11 +15,11 @@ class VmCreateForm extends React.Component {
     this.state = {
       environment: undefined,
       network: undefined,
-      os_template: 'debian10',
       memory: 4,
       cpu_cores: 2,
       os_disk: 32,
-      name: undefined
+      name: undefined,
+      vm_template: undefined
     }
   }
 
@@ -85,8 +85,22 @@ class VmCreateForm extends React.Component {
     </Form.Group>)
   }
 
-  hardwareForm = () => {
+  vmTemplateForm = () => {
     if (this.state.environment === undefined) {
+      return
+    }
+    const templates = this.props.vmTemplate.filter((template) => { return template.environment.id === this.state.environment }).map((template) => <option key={template.id} value={template.id}>{template.name}</option>)
+    return (<Form.Group controlId="createVm.vmTemplate">
+      <Form.Label>VM Template</Form.Label>
+      <Form.Control as="select" name="vm_template" onChange={(e) => this.handleChange(e)}>
+        <option hidden="hidden" key='0'>Select</option>
+        {templates}
+      </Form.Control>
+    </Form.Group>)
+  }
+
+  hardwareForm = () => {
+    if (this.state.vm_template === undefined) {
       return
     }
     return (<Form.Group controlId="createVm.Hardware">
@@ -124,7 +138,7 @@ class VmCreateForm extends React.Component {
   }
 
   submitButton = () => {
-    if (this.state.environment === undefined || this.state.network === undefined || this.state.name === undefined) {
+    if (this.state.environment === undefined || this.state.network === undefined || this.state.name === undefined || this.state.vm_template === undefined) {
       return (
         <Button variant="primary" type="submit" disabled>
               Create VM
@@ -150,6 +164,7 @@ class VmCreateForm extends React.Component {
       </Form.Group>
       {this.nameForm()}
       {this.networkForm()}
+      {this.vmTemplateForm()}
       {this.hardwareForm()}
       {this.submitButton()}
       {this.networkInfo()}
