@@ -18,7 +18,7 @@ function TopBar () {
 
   return (
     <nav className="navbar navbar-dark sticky-top bg-primary flex-md-nowrap p-0 shadow">
-      <Link className="navbar-brand col-md-3 col-lg-2 mr-0 px-3" to="/">Orc <small>ALPHA</small>
+      <Link className="navbar-brand col-md-3 col-lg-2 mr-0 px-3" to="/">Orc <small>Bolg</small>
       </Link>
       {userBar}
     </nav>)
