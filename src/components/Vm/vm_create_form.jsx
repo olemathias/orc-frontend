@@ -39,7 +39,7 @@ class VmCreateForm extends React.Component {
       dispatch(clearAllAlerts())
       for (const alert in error.response.data.errors) {
         window.scrollTo(0, 0)
-        dispatch(addAlert('Error: ' + alert + ' ' + error.response.data.errors[alert], 'warning'))
+        dispatch(addAlert('Error: ' + alert + ' ' + error.response.data.errors[alert], 'warning', false))
       }
     })
     e.preventDefault()

@@ -1,19 +1,26 @@
 import * as Actions from '../constants/actions'
 
-export const addAlert = (text, variant = 'primary') => {
+export const addAlert = (text, variant = 'primary', autoclose = true) => {
   return (dispatch) => {
+    let uid = (Math.random() * 46656) | 0
+    uid = ('000' + uid.toString(36)).slice(-3)
+    if (autoclose) {
+      setTimeout(() => {
+        dispatch(clearAlert(uid))
+      }, 5000)
+    }
     dispatch({
       type: Actions.ADD_ALERT,
-      payload: { variant: variant, text: text }
+      payload: { uid: uid, text: text, variant: variant }
     })
   }
 }
 
-export const clearAlert = (idx) => {
+export const clearAlert = (uid) => {
   return (dispatch) => {
     dispatch({
       type: Actions.CLEAR_ALERT,
-      payload: { idx: idx }
+      payload: { uid: uid }
     })
   }
 }

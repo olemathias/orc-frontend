@@ -34,10 +34,10 @@ function VmShow () {
       }
     }).then(function (response) {
       console.log(response)
-      dispatch(addAlert('Trigged destruction!'))
+      dispatch(addAlert('Trigged destruction!', 'info'))
       dispatch(push('/vm/'))
     }).catch(function (error) {
-      dispatch(addAlert('Failed to trigger destroy!', 'danger'))
+      dispatch(addAlert('Failed to trigger destroy!', 'danger', false))
       console.log(error)
     })
   }
