@@ -33,7 +33,7 @@ const AppRouter = () => (
     <PrivateRoute exact path='/logout' component={Logout} />
     <PrivateRoute exact path='/vm/' component={Vm} />
     <PrivateRoute exact path='/vm/create' component={VmCreate} />
-    <PrivateRoute exact path='/vm/:id(\d+)' component={VmShow} />
+    <PrivateRoute exact path='/vm/:id' component={VmShow} />
     <PrivateRoute exact path='/environment/' component={Environment} />
     <Route component={Error404} />
   </Switch>
