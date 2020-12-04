@@ -6,6 +6,7 @@ import vm from './vmReducer'
 import environment from './environmentReducer'
 import network from './networkReducer'
 import vmTemplate from './vmTemplateReducer'
+import alert from './alertReducer'
 
 const rootReducer = (history) => combineReducers({
   router: connectRouter(history),
@@ -13,7 +14,8 @@ const rootReducer = (history) => combineReducers({
   vm,
   environment,
   network,
-  vmTemplate
+  vmTemplate,
+  alert
 })
 
 export default rootReducer

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { push } from 'connected-react-router'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { getVM } from '../../actions/vm'
@@ -9,6 +10,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Tab from 'react-bootstrap/Tab'
 
 import * as Config from '../../constants/config'
+import { addAlert } from '../../actions/alert'
 
 function VmShow () {
   const dispatch = useDispatch()
@@ -32,7 +34,10 @@ function VmShow () {
       }
     }).then(function (response) {
       console.log(response)
+      dispatch(addAlert('Trigged destruction!'))
+      dispatch(push('/vm/'))
     }).catch(function (error) {
+      dispatch(addAlert('Failed to trigger destroy!', 'danger'))
       console.log(error)
     })
   }

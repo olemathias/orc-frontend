@@ -5,9 +5,8 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import InputGroup from 'react-bootstrap/InputGroup'
 
-import configureStore from '../../store'
-
 import * as Config from '../../constants/config'
+import { addAlert, clearAllAlerts } from '../../actions/alert'
 
 class VmCreateForm extends React.Component {
   constructor (props) {
@@ -24,19 +23,24 @@ class VmCreateForm extends React.Component {
   }
 
   handleSubmit = (e) => {
-    const store = configureStore()
     const axios = require('axios')
 
-    const user = store.getState().user
+    const user = this.props.user
+
+    const dispatch = this.props.dispatch
     axios.post(Config.API_URL + Config.VM_PATH, this.state, {
       headers: {
         Authorization: 'JWT ' + user.token
       }
     }).then(function (response) {
-      console.log(response.data.id)
-      store.dispatch(push('/vm/' + response.data.id))
+      dispatch(addAlert('VM with ID ' + response.data.id + ' created!', 'success'))
+      dispatch(push('/vm/' + response.data.id))
     }).catch(function (error) {
-      console.log(error)
+      dispatch(clearAllAlerts())
+      for (const alert in error.response.data.errors) {
+        window.scrollTo(0, 0)
+        dispatch(addAlert('Error: ' + alert + ' ' + error.response.data.errors[alert], 'warning'))
+      }
     })
     e.preventDefault()
   }

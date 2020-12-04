@@ -11,6 +11,7 @@ import AppRouter from './router'
 // Base components
 import TopBar from './components/Base/topbar'
 import SideBar from './components/Base/sidebar'
+import Alert from './components/Base/alert'
 
 import './App.scss'
 
@@ -25,6 +26,7 @@ class App extends React.Component {
           <div className="row">
             <SideBar/>
             <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+              <Alert/>
               <AppRouter/>
             </main>
           </div>
