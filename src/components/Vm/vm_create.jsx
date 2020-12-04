@@ -14,6 +14,7 @@ function Vm () {
     dispatch(getVMTemplate())
   }, [])
 
+  const user = useSelector(state => state.user)
   const environment = useSelector(state => state.environment)
   const network = useSelector(state => state.network)
   const vmTemplate = useSelector(state => state.vmTemplate)
@@ -22,7 +23,7 @@ function Vm () {
     <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
       <h2 className="h2">Create Virtual Machine</h2>
     </div>
-    <VmCreateForm environment={environment} network={network} vmTemplate={vmTemplate}/>
+    <VmCreateForm environment={environment} network={network} vmTemplate={vmTemplate} user={user} dispatch={dispatch}/>
   </div>)
 }
 
