@@ -8,7 +8,7 @@ function AlertHelper () {
   const alerts = useSelector(state => state.alert)
   const dispatch = useDispatch()
 
-  return alerts.map((alert, idx) => (<Alert key={idx} onClose={() => dispatch(clearAlert(idx))} dismissible={true} variant={alert.variant}> {alert.text} </Alert>))
+  return alerts.map((alert, idx) => (<Alert key={idx} onClose={() => dispatch(clearAlert(alert.uid))} dismissible={true} variant={alert.variant}> {alert.text} </Alert>))
 }
 
 export default AlertHelper

@@ -21,7 +21,7 @@ export const loginUser = (username, password) => {
       err => {
         dispatch({ type: Actions.LOGIN_USER_FAILURE, payload: err })
         dispatch(clearAllAlerts())
-        dispatch(addAlert('Login failed!', 'danger'))
+        dispatch(addAlert('Login failed!', 'danger', false))
       }
     )
   }

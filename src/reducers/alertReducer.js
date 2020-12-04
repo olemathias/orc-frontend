@@ -5,7 +5,7 @@ const alertReducer = (state = [], action) => {
     case Actions.ADD_ALERT:
       return state.concat([action.payload])
     case Actions.CLEAR_ALERT:
-      return state.filter((obj, index) => { return action.payload.idx !== index })
+      return state.filter((obj) => { return action.payload.uid !== obj.uid })
     case Actions.CLEAR_ALL_ALERTS:
       return []
     default:
