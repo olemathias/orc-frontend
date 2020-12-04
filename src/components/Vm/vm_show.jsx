@@ -21,7 +21,7 @@ function VmShow () {
   const axios = require('axios')
 
   const { id } = useParams()
-  const SELECTED_VM = vm.filter(obj => { return obj.id === parseInt(id) })[0]
+  const SELECTED_VM = vm.filter(obj => { return obj.id === id })[0]
 
   const reboot = () => {
     console.log(SELECTED_VM.id)
@@ -71,6 +71,10 @@ function VmShow () {
 
     <table className="table">
       <tbody>
+        <tr>
+          <th scope="row">UUID</th>
+          <td>{SELECTED_VM.id}</td>
+        </tr>
         <tr>
           <th scope="row">FQDN</th>
           <td>{SELECTED_VM.fqdn}</td>
