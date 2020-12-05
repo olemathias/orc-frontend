@@ -1,10 +1,10 @@
 import React from 'react'
 import Badge from 'react-bootstrap/Badge'
 
-function statusHelper (props) {
+function StatusHelper (props) {
   const status = props.status
   if (status === undefined) {
-    return <Badge variant="info">Unknown</Badge>
+    return <Badge variant="secondary">Unknown</Badge>
   }
   if (status === 'provisioned') {
     return <Badge variant="success">{status.charAt(0).toUpperCase() + status.slice(1)}</Badge>
@@ -21,4 +21,4 @@ function statusHelper (props) {
   return <Badge variant="info">{status.charAt(0).toUpperCase() + status.slice(1)}</Badge>
 }
 
-export default statusHelper
+export default StatusHelper
