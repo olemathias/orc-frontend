@@ -5,6 +5,7 @@ import { push } from 'connected-react-router'
 import { useSelector, useDispatch } from 'react-redux'
 import { getVM } from '../../actions/vm'
 import StatusHelper from './status'
+import DateTimeHelper from '../Base/datetime'
 
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
@@ -106,11 +107,11 @@ function VmShow () {
         </tr>
         <tr>
           <th scope="row">Created</th>
-          <td>{SELECTED_VM.created}</td>
+          <td><DateTimeHelper datetime={SELECTED_VM.created}/></td>
         </tr>
         <tr>
           <th scope="row">Last Updated</th>
-          <td>{SELECTED_VM.updated}</td>
+          <td><DateTimeHelper datetime={SELECTED_VM.updated}/></td>
         </tr>
       </tbody>
     </table>
