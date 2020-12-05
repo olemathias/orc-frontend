@@ -4,6 +4,7 @@ import { push } from 'connected-react-router'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { getVM } from '../../actions/vm'
+import StatusHelper from './status'
 
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
@@ -14,7 +15,15 @@ import { addAlert } from '../../actions/alert'
 
 function VmShow () {
   const dispatch = useDispatch()
-  useEffect(() => dispatch(getVM()), [])
+
+  useEffect(() => {
+    dispatch(getVM())
+    const interval = setInterval(() => {
+      dispatch(getVM())
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
   const vm = useSelector(state => state.vm)
   const user = useSelector(state => state.user)
 
@@ -43,14 +52,14 @@ function VmShow () {
   }
 
   if (SELECTED_VM === undefined) {
-    return (<div></div>)
+    return (<h4> 404 - VM not found </h4>)
   }
 
   const state = Object.keys(SELECTED_VM.state).map(key =>
     <div key={key}>
       <ListGroup.Item action href={'#' + key } >
         <h5 className="mb-1">{ key + ' ' }
-          <span className="badge badge-secondary"> { SELECTED_VM.state[key].status } </span>
+          <StatusHelper status={SELECTED_VM.state[key].status} />
         </h5>
       </ListGroup.Item>
       <Tab.Content>
@@ -64,7 +73,7 @@ function VmShow () {
   return (
   <div>
     <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-      <h1 className="h2">{SELECTED_VM.name}</h1>
+      <h2 className="h2">{SELECTED_VM.name} <StatusHelper status={SELECTED_VM.status} /></h2>
     </div>
     <Button variant="outline-warning" onClick={reboot}> Reboot </Button>
     <Button variant="outline-danger" onClick={destroy} > Destroy </Button>
