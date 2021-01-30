@@ -5,7 +5,7 @@ import * as Config from '../constants/config'
 
 const axios = require('axios')
 
-export const getEnvironment = () => {
+export const getPlatform = () => {
   const store = configureStore()
   const user = store.getState().user
   return (dispatch) => {

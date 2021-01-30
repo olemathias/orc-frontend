@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getEnvironment } from '../../actions/environment'
+import { getPlatform } from '../../actions/platform'
 import { getNetwork } from '../../actions/network'
 import { getVMTemplate } from '../../actions/vmTemplate'
 
@@ -9,13 +9,13 @@ import VmCreateForm from './vm_create_form'
 function Vm () {
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getEnvironment())
+    dispatch(getPlatform())
     dispatch(getNetwork())
     dispatch(getVMTemplate())
   }, [])
 
   const user = useSelector(state => state.user)
-  const environment = useSelector(state => state.environment)
+  const platform = useSelector(state => state.platform)
   const network = useSelector(state => state.network)
   const vmTemplate = useSelector(state => state.vmTemplate)
 
@@ -23,7 +23,7 @@ function Vm () {
     <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
       <h2 className="h2">Create Virtual Machine</h2>
     </div>
-    <VmCreateForm environment={environment} network={network} vmTemplate={vmTemplate} user={user} dispatch={dispatch}/>
+    <VmCreateForm platform={platform} network={network} vmTemplate={vmTemplate} user={user} dispatch={dispatch}/>
   </div>)
 }
 

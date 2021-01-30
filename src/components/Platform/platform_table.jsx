@@ -3,15 +3,15 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Table from 'react-bootstrap/Table'
 
-class EnvironmentTable extends React.Component {
+class PlatformTable extends React.Component {
   render (props) {
-    const items = this.props.environment.map((environment) => <tr key={environment.id}>
+    const items = this.props.platform.map((platform) => <tr key={platform.id}>
       <td>
-        <Link to={'/environment/' + environment.id}>
-          {environment.id}
+        <Link to={'/platform/' + platform.id}>
+          {platform.id}
         </Link>
       </td>
-      <td>{environment.name}</td>
+      <td>{platform.name}</td>
     </tr>)
     return (<Table striped="striped" bordered="bordered" hover="hover" responsive="responsive">
       <thead>
@@ -27,4 +27,4 @@ class EnvironmentTable extends React.Component {
   }
 }
 
-export default EnvironmentTable
+export default PlatformTable

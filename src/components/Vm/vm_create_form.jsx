@@ -12,7 +12,7 @@ class VmCreateForm extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      environment: undefined,
+      platform: undefined,
       network: undefined,
       memory: 4,
       cpu_cores: 2,
@@ -59,27 +59,27 @@ class VmCreateForm extends React.Component {
   }
 
   nameForm = () => {
-    if (this.state.environment === undefined) {
+    if (this.state.platform === undefined) {
       return
     }
-    const environment = this.props.environment.filter((environment) => { return environment.id === this.state.environment })[0]
+    const platform = this.props.platform.filter((platform) => { return platform.id === this.state.platform })[0]
     return (
     <Form.Group controlId="createVm.Name">
       <Form.Label>Name</Form.Label>
       <InputGroup className="mb-2 mr-sm-2">
         <Form.Control name="name" placeholder="Hostname" value={this.state.name || ''} onChange={(e) => this.handleChange(e)}/>
         <InputGroup.Append>
-          <InputGroup.Text>.{environment.config.domain}</InputGroup.Text>
+          <InputGroup.Text>.{platform.config.domain}</InputGroup.Text>
         </InputGroup.Append>
       </InputGroup>
     </Form.Group>)
   }
 
   networkForm = () => {
-    if (this.state.environment === undefined) {
+    if (this.state.platform === undefined) {
       return
     }
-    const networks = this.props.network.filter((network) => { return network.environment.id === this.state.environment }).map((network) => <option key={network.id} value={network.id}>{network.name}</option>)
+    const networks = this.props.network.filter((network) => { return network.platform.id === this.state.platform }).map((network) => <option key={network.id} value={network.id}>{network.name}</option>)
     return (<Form.Group controlId="createVm.Network">
       <Form.Label>Network</Form.Label>
       <Form.Control as="select" name="network" onChange={(e) => this.handleChange(e)}>
@@ -90,10 +90,10 @@ class VmCreateForm extends React.Component {
   }
 
   vmTemplateForm = () => {
-    if (this.state.environment === undefined) {
+    if (this.state.platform === undefined) {
       return
     }
-    const templates = this.props.vmTemplate.filter((template) => { return template.environment.id === this.state.environment }).map((template) => <option key={template.id} value={template.id}>{template.name}</option>)
+    const templates = this.props.vmTemplate.filter((template) => { return template.platform.id === this.state.platform }).map((template) => <option key={template.id} value={template.id}>{template.name}</option>)
     return (<Form.Group controlId="createVm.vmTemplate">
       <Form.Label>VM Template</Form.Label>
       <Form.Control as="select" name="vm_template" onChange={(e) => this.handleChange(e)}>
@@ -142,7 +142,7 @@ class VmCreateForm extends React.Component {
   }
 
   submitButton = () => {
-    if (this.state.environment === undefined || this.state.network === undefined || this.state.name === undefined || this.state.vm_template === undefined) {
+    if (this.state.platform === undefined || this.state.network === undefined || this.state.name === undefined || this.state.vm_template === undefined) {
       return (
         <Button variant="primary" type="submit" disabled>
               Create VM
@@ -157,13 +157,13 @@ class VmCreateForm extends React.Component {
   }
 
   render () {
-    const environments = this.props.environment.map((environment) => <option key={environment.id} value={environment.id}>{environment.name}</option>)
+    const platforms = this.props.platform.map((platform) => <option key={platform.id} value={platform.id}>{platform.name}</option>)
     return (<Form onSubmit={this.handleSubmit}>
-      <Form.Group controlId="createVm.Environment">
-        <Form.Label>Environment</Form.Label>
-        <Form.Control as="select" name="environment" onChange={(e) => this.handleChange(e)}>
+      <Form.Group controlId="createVm.Platform">
+        <Form.Label>Platform</Form.Label>
+        <Form.Control as="select" name="platform" onChange={(e) => this.handleChange(e)}>
           <option hidden="hidden" key='0'>Select</option>
-          {environments}
+          {platforms}
         </Form.Control>
       </Form.Group>
       {this.nameForm()}

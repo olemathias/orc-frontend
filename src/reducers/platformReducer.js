@@ -1,6 +1,6 @@
 import * as Actions from '../constants/actions'
 
-const environmentReducer = (state = [], action) => {
+const platformReducer = (state = [], action) => {
   switch (action.type) {
     case Actions.GET_ENVIRONMENT_SUCCESS:
       return action.payload
@@ -9,4 +9,4 @@ const environmentReducer = (state = [], action) => {
   }
 }
 
-export default environmentReducer
+export default platformReducer

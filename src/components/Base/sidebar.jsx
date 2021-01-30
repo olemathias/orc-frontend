@@ -14,7 +14,7 @@ function SideBar () {
     userNavBar = (
       <div>
         <li className="nav-item">
-          <Link className="nav-link" to="/environment">Environments</Link>
+          <Link className="nav-link" to="/platform">Platforms</Link>
         </li>
         <li className="nav-item">
           <Link className="nav-link" to="/vm">VM</Link>

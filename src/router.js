@@ -11,7 +11,7 @@ import Vm from './components/Vm/vm'
 import VmCreate from './components/Vm/vm_create'
 import VmShow from './components/Vm/vm_show'
 
-import Environment from './components/Environment/environment'
+import Platform from './components/Platform/platform'
 
 import Error404 from './components/404'
 
@@ -34,7 +34,7 @@ const AppRouter = () => (
     <PrivateRoute exact path='/vm/' component={Vm} />
     <PrivateRoute exact path='/vm/create' component={VmCreate} />
     <PrivateRoute exact path='/vm/:id' component={VmShow} />
-    <PrivateRoute exact path='/environment/' component={Environment} />
+    <PrivateRoute exact path='/platform/' component={Platform} />
     <Route component={Error404} />
   </Switch>
 )
