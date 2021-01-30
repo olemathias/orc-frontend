@@ -90,8 +90,8 @@ function VmShow () {
           <td>{SELECTED_VM.fqdn}</td>
         </tr>
         <tr>
-          <th scope="row">Environment</th>
-          <td>{SELECTED_VM.environment.name}</td>
+          <th scope="row">Platform</th>
+          <td>{SELECTED_VM.platform.name}</td>
         </tr>
         <tr>
           <th scope="row">Network</th>
