@@ -1,6 +1,6 @@
 # build environment
-FROM node:15.2.1-alpine as build
-RUN apk --no-cache --virtual build-dependencies add python make g++
+FROM node:16-alpine as build
+RUN apk --no-cache --virtual build-dependencies add python3 make g++
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json ./
