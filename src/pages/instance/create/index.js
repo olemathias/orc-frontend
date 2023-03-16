@@ -1,22 +1,20 @@
 import { useState } from "react";
 import { withApiData } from "utils/fetching";
+import { useSession } from "next-auth/react";
+import getConfig from "next/config";
+import axios from "axios";
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
-
 import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-
 import Box from "@mui/material/Box";
 import Autocomplete from "@mui/material/Autocomplete";
 import Grid from "@mui/material/Grid";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-
 import Paper from "@mui/material/Paper";
+
+const { publicRuntimeConfig } = getConfig();
+const apiUrl = publicRuntimeConfig.apiUrl;
 
 export const getServerSideProps = withApiData(undefined, {
   route: "platform",
@@ -25,6 +23,7 @@ export const getServerSideProps = withApiData(undefined, {
 
 export default function Home({ apiData }) {
   const platforms = apiData.data.results;
+  const { data: session } = useSession();
 
   const [vmConfig, setVmConfig] = useState({
     platform: {},
@@ -38,16 +37,46 @@ export default function Home({ apiData }) {
   });
 
   const [cleanVmConfig, setCleanVmConfig] = useState(vmConfig);
-  const [validVmConfig, setValidVmConfig] = useState(true);
 
   const setConfig = (key, value) => {
+    // Reset all if platform is changed
+    if (key === "platform" && value !== vmConfig.platform) {
+      setVmConfig({
+        ...vmConfig,
+        platform: value,
+        network: {},
+        template: {},
+      });
+      setCleanVmConfig({
+        ...cleanVmConfig,
+        platform: value?.id,
+        network: "",
+        template: "",
+      });
+      return;
+    }
     setVmConfig({ ...vmConfig, [key]: value });
-    if (key == "platform" || key == "network" || key == "template") {
-      console.log(key);
-      console.log(value);
+    if (key === "platform" || key === "network" || key === "template") {
       setCleanVmConfig({ ...cleanVmConfig, [key]: value?.id });
     } else {
       setCleanVmConfig({ ...cleanVmConfig, [key]: value });
+    }
+  };
+
+  const createServer = async () => {
+    try {
+      const response = await axios({
+        method: "post",
+        url: `${apiUrl}/instance/`,
+        data: cleanVmConfig,
+        headers: {
+          Authorization: `Bearer ${session?.accessToken}`,
+        },
+      });
+      const { data } = response;
+      console.log(data);
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -196,6 +225,7 @@ export default function Home({ apiData }) {
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button sx={{ mt: 3, ml: 1 }}>Cancel</Button>
           <Button
+            onClick={() => createServer()}
             disabled={
               !vmConfig.name ||
               !vmConfig.platform?.id ||

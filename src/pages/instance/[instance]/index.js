@@ -1,5 +1,8 @@
-import { useState } from "react";
 import { withApiData } from "utils/fetching";
+import { useSession } from "next-auth/react";
+import getConfig from "next/config";
+import axios from "axios";
+
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
@@ -15,19 +18,48 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Button from "@mui/material/Button";
+
+const { publicRuntimeConfig } = getConfig();
+const apiUrl = publicRuntimeConfig.apiUrl;
 
 export const getServerSideProps = withApiData(undefined, {
-  route: ({ params }) => `instance/${params.instance}`,
+  route: ({ params }) => `instance/${params.instance}/`,
   prop: "instanceData",
 });
 
-export default function Home({ instanceData }) {
+export default function ShowInstance({ instanceData }) {
+  const { data: session } = useSession();
   const instance = instanceData.data;
+
+  const deleteServer = async () => {
+    try {
+      const response = await axios({
+        method: "delete",
+        url: `${apiUrl}/instance/${instance.id}`,
+        headers: {
+          Authorization: `Bearer ${session?.accessToken}`,
+        },
+      });
+      const { data } = response;
+      console.log(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <Container sx={{ height: "100%" }}>
       <Typography gutterBottom variant="h4" component="div">
         {instance.name}
       </Typography>
+      <Button
+        sx={{ mb: 2 }}
+        variant="outlined"
+        onClick={() => deleteServer(instance.id)}
+      >
+        Delete
+      </Button>
       <TableContainer component={Paper} sx={{ marginTop: 2, marginBottom: 2 }}>
         <Table>
           <TableBody>
@@ -134,6 +166,27 @@ export default function Home({ instanceData }) {
         <AccordionDetails>
           <pre>
             {JSON.stringify(instance.dns_reverse_provider_state, null, 2)}
+          </pre>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="vm">
+          <Typography sx={{ width: "33%", flexShrink: 0 }}>
+            Identity Management
+          </Typography>
+          <Typography sx={{ color: "text.secondary" }}>
+            {instance.identity_management_provider_state?.type}
+            {" - "}
+            {instance.identity_management_provider_state?.status}
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <pre>
+            {JSON.stringify(
+              instance.identity_management_provider_state,
+              null,
+              2
+            )}
           </pre>
         </AccordionDetails>
       </Accordion>

@@ -8,8 +8,9 @@ export default withAuth(function middleware(req) {}, {
       }
       return (
         !!token &&
-        !token?.error &&
-        (!token?.accessTokenExpires || Date.now() < token?.accessTokenExpires)
+        token?.error !== "refresh access token" &&
+        (!token?.accessTokenExpires ||
+          Date.now() < token?.accessTokenExpires + 10000)
       );
     },
   },

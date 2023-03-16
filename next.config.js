@@ -14,7 +14,7 @@ const nextConfig = {
     url: process.env.URL,
     apiUrl: process.env.API_URL,
   },
-  output: "standalone",
+  //output: "standalone",
 };
 
 module.exports = nextConfig;
