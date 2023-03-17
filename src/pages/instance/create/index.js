@@ -3,6 +3,7 @@ import { withApiData } from "utils/fetching";
 import { useSession } from "next-auth/react";
 import getConfig from "next/config";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -22,6 +23,7 @@ export const getServerSideProps = withApiData(undefined, {
 });
 
 export default function Home({ apiData }) {
+  const router = useRouter();
   const platforms = apiData.data.results;
   const { data: session } = useSession();
 
@@ -75,6 +77,7 @@ export default function Home({ apiData }) {
       });
       const { data } = response;
       console.log(data);
+      router.push(`/instance/${data.id}`);
     } catch (e) {
       console.error(e);
     }
@@ -119,7 +122,6 @@ export default function Home({ apiData }) {
                   label="Select Platform"
                   inputProps={{
                     ...params.inputProps,
-                    autoComplete: "new-password",
                   }}
                 />
               )}
@@ -148,7 +150,6 @@ export default function Home({ apiData }) {
                       label="Select Network"
                       inputProps={{
                         ...params.inputProps,
-                        autoComplete: "new-password",
                       }}
                     />
                   )}
@@ -175,7 +176,6 @@ export default function Home({ apiData }) {
                       label="Select Instance Template"
                       inputProps={{
                         ...params.inputProps,
-                        autoComplete: "new-password",
                       }}
                     />
                   )}
