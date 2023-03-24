@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { withApiData } from "utils/fetching";
 import { useSession } from "next-auth/react";
 import getConfig from "next/config";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -20,6 +22,10 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Button from "@mui/material/Button";
 
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
+
 const { publicRuntimeConfig } = getConfig();
 const apiUrl = publicRuntimeConfig.apiUrl;
 
@@ -29,10 +35,13 @@ export const getServerSideProps = withApiData(undefined, {
 });
 
 export default function ShowInstance({ instanceData }) {
+  const router = useRouter();
   const { data: session } = useSession();
+  const [showDeleteInstanceDialog, setShowDeleteInstanceDialog] =
+    useState(false);
   const instance = instanceData.data;
 
-  const deleteServer = async () => {
+  const deleteInstance = async () => {
     try {
       const response = await axios({
         method: "delete",
@@ -42,7 +51,7 @@ export default function ShowInstance({ instanceData }) {
         },
       });
       const { data } = response;
-      console.log(data);
+      router.push(`/instance/`);
     } catch (e) {
       console.error(e);
     }
@@ -56,7 +65,7 @@ export default function ShowInstance({ instanceData }) {
       <Button
         sx={{ mb: 2 }}
         variant="outlined"
-        onClick={() => deleteServer(instance.id)}
+        onClick={() => setShowDeleteInstanceDialog(true)}
       >
         Delete
       </Button>
@@ -206,6 +215,27 @@ export default function ShowInstance({ instanceData }) {
           ]}
         />
       </Paper>
+      <Dialog open={showDeleteInstanceDialog}>
+        <DialogTitle id="alert-dialog-title">
+          Delete instance {instance.name}?
+        </DialogTitle>
+        <DialogActions>
+          <Button
+            variant="outlined"
+            autoFocus
+            onClick={() => setShowDeleteInstanceDialog(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="outlined"
+            color="error"
+            onClick={() => deleteInstance(instance.id)}
+          >
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
