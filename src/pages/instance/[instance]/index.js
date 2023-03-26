@@ -164,7 +164,7 @@ export default function ShowInstance({ instanceData }) {
       <Accordion>
         <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="vm">
           <Typography sx={{ width: "33%", flexShrink: 0 }}>
-            Forward DNS
+            Reverse DNS
           </Typography>
           <Typography sx={{ color: "text.secondary" }}>
             {instance.dns_reverse_provider_state?.type}
