@@ -23,7 +23,7 @@ export default function Home({ apiData }) {
           { field: "name", headerName: "Name", width: 150 },
           {
             field: "ipam_provider_config_type",
-            valueGetter: ({ row }) => {
+            valueGetter: (value, row, column, apiRef) => {
               return row.ipam_provider_config.type;
             },
             headerName: "IPAM Provider",

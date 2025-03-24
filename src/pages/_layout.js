@@ -70,7 +70,7 @@ export default function Layout({ user, children }) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton component={Link} href="/network">
+          <ListItemButton disabled component={Link} href="/network">
             <ListItemIcon>
               <HubIcon />
             </ListItemIcon>

@@ -47,19 +47,19 @@ export default function Home({ apiData }) {
             field: "platform",
             headerName: "Platform",
             width: 150,
-            valueGetter: ({ row }) => row.platform.name,
+            valueGetter: (value, row) => row.platform.name,
           },
           {
             field: "network",
             headerName: "Network",
             width: 150,
-            valueGetter: ({ row }) => row.network.name,
+            valueGetter: (value, row) => row.network.name,
           },
           {
             field: "template",
             headerName: "Template",
             width: 150,
-            valueGetter: ({ row }) => row.template.name,
+            valueGetter: (value, row) => row.template.name,
           },
         ]}
       />
