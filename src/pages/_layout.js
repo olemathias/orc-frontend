@@ -49,7 +49,7 @@ export default function Layout({ user, children }) {
           style={{ color: "inherit", textDecoration: "inherit" }}
           href={"/"}
         >
-          Orc - TG23
+          Orc - TG25
         </Link>
       </Typography>
       <List>
