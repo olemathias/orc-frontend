@@ -45,7 +45,7 @@ export default function ShowInstance({ instanceData }) {
     try {
       const response = await axios({
         method: "delete",
-        url: `${apiUrl}/instance/${instance.id}`,
+        url: `${apiUrl}/instance/${instance.id}/`,
         headers: {
           Authorization: `Bearer ${session?.accessToken}`,
         },
